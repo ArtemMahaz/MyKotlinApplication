@@ -60,7 +60,7 @@ fun generatePdfReport(context: Context, studentName: String, group: String, prac
 
         try {
             context.startActivity(intent)
-        } catch (e: ActivityNotFoundException) {
+        } catch (_: ActivityNotFoundException) {
             Toast.makeText(context, "На телефоні не встановлено програму для читання PDF", Toast.LENGTH_LONG).show()
         }
 

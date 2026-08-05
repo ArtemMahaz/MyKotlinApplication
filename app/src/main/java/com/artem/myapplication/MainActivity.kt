@@ -15,7 +15,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Info
-import androidx.compose.material.icons.filled.List
+import androidx.compose.material.icons.automirrored.filled.List
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -63,7 +63,7 @@ fun StudentAssistantApp() {
         bottomBar = {
             NavigationBar {
                 NavigationBarItem(
-                    icon = { Icon(Icons.Default.List, contentDescription = "Розклад") },
+                    icon = { Icon(Icons.AutoMirrored.Filled.List, contentDescription = "Розклад") },
                     label = { Text("Розклад") },
                     selected = false,
                     onClick = { }
@@ -123,7 +123,7 @@ fun StudentAssistantApp() {
             ) {
                 OutlinedButton(
                     onClick = {
-                        println("Генеруємо DOCX для: $studentName")
+                        generateWordReport(context, studentName, group, practiceBase)
                     },
                     modifier = Modifier.weight(1f)
                 ) {
