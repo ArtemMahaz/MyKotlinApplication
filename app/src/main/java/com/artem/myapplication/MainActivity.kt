@@ -35,6 +35,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.platform.LocalContext
 import com.artem.myapplication.ui.theme.MyApplicationTheme
 
 class MainActivity : ComponentActivity() {
@@ -91,6 +92,7 @@ fun StudentAssistantApp() {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             var studentName by remember { mutableStateOf("") }
+            val context = LocalContext.current
             var group by remember { mutableStateOf("") }
             var practiceBase by remember { mutableStateOf("") }
 
@@ -130,7 +132,7 @@ fun StudentAssistantApp() {
 
                 Button(
                     onClick = {
-                        println("Генеруємо PDF для: $studentName")
+                        generatePdfReport(context, studentName, group, practiceBase)
                     },
                     modifier = Modifier.weight(1f)
                 ) {
