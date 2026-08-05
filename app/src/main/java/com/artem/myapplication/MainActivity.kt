@@ -18,6 +18,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.artem.myapplication.ui.theme.MyApplicationTheme
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.List
+import androidx.compose.material3.Icon
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,8 +49,25 @@ fun StudentAssistantApp() {
             )
         },
         bottomBar = {
-            BottomAppBar {
-                Text("Розклад | Нотатки | Звіти", modifier = Modifier.padding(start = 16.dp))
+            NavigationBar {
+                NavigationBarItem(
+                    icon = { Icon(Icons.Default.List, contentDescription = "Розклад") },
+                    label = { Text("Розклад") },
+                    selected = false,
+                    onClick = { }
+                )
+                NavigationBarItem(
+                    icon = { Icon(Icons.Default.Edit, contentDescription = "Нотатки") },
+                    label = { Text("Нотатки") },
+                    selected = false,
+                    onClick = { }
+                )
+                NavigationBarItem(
+                    icon = { Icon(Icons.Default.Info, contentDescription = "Звіти") },
+                    label = { Text("Звіти") },
+                    selected = true,
+                    onClick = { }
+                )
             }
         }
     ) { innerPadding ->
@@ -53,7 +77,7 @@ fun StudentAssistantApp() {
                 .padding(innerPadding),
             contentAlignment = Alignment.Center
         ) {
-            Text("Оберіть розділ у нижньому меню")
+            Text("Тут буде генератор звітів")
         }
     }
 }
