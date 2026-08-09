@@ -4,7 +4,9 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -13,12 +15,13 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Info
-import androidx.compose.material.icons.filled.List
+import androidx.compose.material.icons.automirrored.filled.List
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -32,6 +35,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.platform.LocalContext
 import com.artem.myapplication.ui.theme.MyApplicationTheme
 
 class MainActivity : ComponentActivity() {
@@ -59,7 +63,7 @@ fun StudentAssistantApp() {
         bottomBar = {
             NavigationBar {
                 NavigationBarItem(
-                    icon = { Icon(Icons.Default.List, contentDescription = "Розклад") },
+                    icon = { Icon(Icons.AutoMirrored.Filled.List, contentDescription = "Розклад") },
                     label = { Text("Розклад") },
                     selected = false,
                     onClick = { }
@@ -88,6 +92,7 @@ fun StudentAssistantApp() {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             var studentName by remember { mutableStateOf("") }
+            val context = LocalContext.current
             var group by remember { mutableStateOf("") }
             var practiceBase by remember { mutableStateOf("") }
 
@@ -109,16 +114,30 @@ fun StudentAssistantApp() {
                 value = practiceBase,
                 onValueChange = { practiceBase = it },
                 label = { Text("База практики (Підприємство/Кафедра)") },
-                modifier = Modifier.fillMaxWidth().padding(bottom = 16.dp)
+                modifier = Modifier.fillMaxWidth().padding(bottom = 24.dp)
             )
 
-            Button(
-                onClick = {
-                    println("Генеруємо звіт для: $studentName, $group")
-                },
-                modifier = Modifier.fillMaxWidth()
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(16.dp)
             ) {
-                Text("Згенерувати звіт")
+                OutlinedButton(
+                    onClick = {
+                        generateWordReport(context, studentName, group, practiceBase)
+                    },
+                    modifier = Modifier.weight(1f)
+                ) {
+                    Text("Word (.docx)")
+                }
+
+                Button(
+                    onClick = {
+                        generatePdfReport(context, studentName, group, practiceBase)
+                    },
+                    modifier = Modifier.weight(1f)
+                ) {
+                    Text("PDF")
+                }
             }
         }
     }
